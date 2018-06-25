@@ -1,0 +1,5 @@
+Following excersise from Structure and Interpretation of Computer Programs, 1.2.2. Excersise 1.11
+
+Given a function f(n) is equal to n, if n is less than 3, or equal to f(n-1 + 2f(n-2) + 3f(n-3). Write a procedure that computes f by means of a recursive process. Also a procedure that uses an iterative process. 
+
+My iterative procedure executes a loop where c, b, and a describe the first three natural number terms. c = 0, b= 1, a= 2. I use a state variable count as a hault for the loop. Count describes the current index of 'a' in the sequence -- thus it starts as 2.

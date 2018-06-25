@@ -1,0 +1,5 @@
+The excersise is from SICP 1.2.3. Excersise 1.12.
+
+The task is to generate Elements of Pascals triangle using a recursive process.
+
+After struggling to find a way to find the 'parent' index for element n, I decided to create an iterative process (get-row) which finds the row for element n. This way I can use subtraction to find the index of parent elements.
