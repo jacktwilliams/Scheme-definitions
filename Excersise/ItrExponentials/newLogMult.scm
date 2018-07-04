@@ -21,7 +21,9 @@
   (define (itr a b c)
     ;;mult b * c
     (cond ((= c 0) a)
-          ((even? c) (itr (+ a (double b)) b (halve c)))
+          ((even? c) (itr (+ a (double b))
+                          b
+                          (halve c)))
           (else (itr (+ a b) b (- c 1))))
     )
   (itr 0 b c))
