@@ -1,0 +1,1 @@
+My timing data did not increase uniformly with the order of growth (sqrt(n)). Times for values close to 100,000 were actually less than those closest to 10,000. 
