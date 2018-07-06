@@ -1,0 +1,1 @@
+It would work. However it would wait until the exponential is calculated to compute the modulus. Considering how expensive division can be, I assume that it is better to continually calculate the remainder. This way both m and (quantity squared) will stay small.

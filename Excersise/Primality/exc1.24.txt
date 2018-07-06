@@ -1,0 +1,1 @@
+As with 1.23 I am getting varying runtime increases. Between 10^6 and 10^7 I got about 5x increase. Expecting around 3. Could be due to other processes on the system. Also, with fast-prime?, fermats test itself will take longer with larger numbers because calculating exponentials also takes time proportional to n.

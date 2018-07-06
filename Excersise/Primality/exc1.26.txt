@@ -1,0 +1,1 @@
+Louis is calculating the expmod quantity twice. Since this is tree recursive however, the order of growth is higher than just 2logn.
