@@ -20,9 +20,18 @@
           (else (* 4 base))))
   (define h (/ (- ceiling floor) n))
   (* (/ h 3.0)
-     (sum term 0 inc n)))
+     (new-sum term 0 inc n)))
   
 (define (cube a)
   (* a a a))
+
+;;excersise 1.30 writing high order procedure 'sum' iteratively
+(define (new-sum term a next b)
+  (define (itr a result)
+    (if (> a b)
+        result
+        (itr (next a) (+ result (term a))))
+    )
+  (itr a 0))
     
   
