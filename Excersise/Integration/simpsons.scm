@@ -8,6 +8,7 @@
       0
       (+ (term a)
          (sum term (next a) next b))))
+;;procedures above this comment were provided
 
 (define (simpson f floor ceiling n)
   (define (term c)
