@@ -1,4 +1,4 @@
-#lang racket
+#lang sicp
 ;;excersise 1.31 create product higher order procedure
 ;;which finds the product of values of a function at points over given range
 (define (prod f ceiling interv current)
@@ -10,7 +10,7 @@
 ;;test by showing how it works with factorial
 (define (fact n)
   (define (identity x) x)
-  (new-prod identity n 1 1))
+  (acc-prod identity n 1))
 
 ;;lets approximate pi
 ;;works. I just need to know how to convert fraction to decimal.
@@ -45,4 +45,43 @@
         (p-itr (+ current 1) (* result (f current))))
     )
   (p-itr 1 1))
+
+;;more general notion of accumulate. Excersise 1.33
+(define (accumulate combiner null-value term a next b)
+  (if (> a b)
+      null-value
+      (combiner (term a)
+                (accumulate combiner null-value term (next a) next b))))
+
+;;summation in terms of accumulate
+(define (summation a b term next)
+  (define (plus a b)
+    (+ a b)
+    )
+  (accumulate plus 0 term a next b))
+
+;;testing
+(define (intSum n)
+  (define (identity x)
+    x
+    )
+  (summation 1 n identity inc))
+
+;;products in terms of accumulate
+(define (acc-prod f ceiling interv)
+  (define (mult x y)
+    (* x y)
+    )
+  (define (next x)
+    (+ x interv))
+  (accumulate-it mult 1 f 1 next ceiling))
+
+;;iterative accumulate
+(define (accumulate-it combiner null-value term a next b)
+  (define (acc-iter x result)
+    (if (> x b)
+        (combiner result null-value)
+        (acc-iter (next x) (combiner result (term x))))
+    )
+  (acc-iter a null-value))
             
