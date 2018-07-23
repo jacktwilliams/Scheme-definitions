@@ -31,5 +31,23 @@
   (make-interval (- (lower-bound x) (upper-bound y))
                  (- (upper-bound x) (lower-bound y))))
 
+;;given
+(define (make-center-width c w)
+  (make-interval (- c w) (+ c w)))
+(define (center i)
+  (/ (+ (lower-bound i) (upper-bound i)) 2))
+(define (width i)
+  (/ (- (upper-bound i) (lower-bound i)) 2))
 
-  
+;;excersise 2.12 constructor that makes interval with tolerance percentage
+(define (make-center-percent c tol)
+  (make-interval (- c (* c (/ tol 100))) (+ c (* c (/ tol 100)))))
+
+;;2.12 selector 'percent' which finds the tolerance percentage
+(define (percent int)
+  (* 100 (/ (width int) (center int))))
+
+(define A (make-center-width 5 .1))
+(define B (make-center-width 10 .1))
+(define aa (div-interval A A))
+(define ab (div-interval A B))
