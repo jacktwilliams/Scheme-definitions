@@ -23,12 +23,44 @@
 
 ;;2.18 reverse the list
 (define (reverse list)
-   (define (reverse-proc l orig-first)
-     (if (null? (cdr l))
-         (car l)
-         (if orig-first
-             (cons (reverse-proc (cdr l) #f) (cons (car l) nil))
-             (cons (reverse-proc (cdr l) #f) (car l)))))
-  (reverse-proc list #t))
+  (if (null? (cdr list))
+      (cons (car list) nil)
+      (append (reverse (cdr list)) (cons (car list) nil))))
 
 (define back-list (reverse (list 1 2 3 4 5)))
+
+;;excersise 2.19. Modifying count change to use lists
+(define (cc amount coin-values)
+  (cond ((= amount 0) 1)
+        ((or (< amount 0) (no-more? coin-values)) 0)
+        (else
+         (+ (cc amount
+                (except-first-denomination
+                 coin-values))
+            (cc (- amount
+                   (first-denomination
+                    coin-values))
+                coin-values)))))
+
+(define (except-first-denomination list)
+  (cdr list))
+(define (first-denomination list)
+  (car list))
+(define (no-more? list)
+  (null? list))
+
+(define us-coins (list 50 25 10 5 1))
+(define uk-coins (list 100 50 20 10 5 2 1 0.5))
+
+(define (even? n)
+  (= 0 (remainder n 2)))
+
+(define (same-parity first . list)
+  (define (construct l)
+    (if (null? l)
+        nil
+        (if (or (and (even? first) (even? (car l)))
+                (and (not (even? first)) (not (even? (car l)))))
+            (append (cons (car l) nil) (same-parity (cdr l)))
+            (same-parity (cdr l)))))
+  (construct list))
