@@ -55,12 +55,23 @@
 (define (even? n)
   (= 0 (remainder n 2)))
 
-(define (same-parity first . list)
-  (define (construct l)
-    (if (null? l)
-        nil
-        (if (or (and (even? first) (even? (car l)))
-                (and (not (even? first)) (not (even? (car l)))))
-            (append (cons (car l) nil) (same-parity (cdr l)))
-            (same-parity (cdr l)))))
-  (construct list))
+;;excersise 2.20. Given arguments, return list of all arguments with same even-odd parity of first argument.
+;;helper func test parity of two ints
+(define (same-par x y)
+  (if (or (and (even? x) (even? y))
+          (and (not (even? x)) (not (even? y))))
+      #t
+      #f))
+
+(define (same-parity1 first . list)
+  (define (par-itr l n)
+    (if (= n 0)
+        (if (same-par first (car l))
+            (append (cdr l) (cons (car l) nil))
+            (cdr l))
+        (if (same-par first (car l))
+            (par-itr (append (cdr l) (cons (car l) nil)) (- n 1))
+            (par-itr (cdr l) (- n 1)))))
+  (par-itr (append (cons first nil) list) (length list)))
+  
+    
