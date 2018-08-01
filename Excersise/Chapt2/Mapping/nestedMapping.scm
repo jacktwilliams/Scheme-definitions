@@ -37,6 +37,44 @@
       (cons low (enumerate-interval (+ low 1) high))))
 
 ;;given are above
+(define (prime? n)
+  (define (expmod base exp m)
+    (cond ((= exp 0) 1)
+          ((even? exp)
+           (remainder
+            (square (expmod base (/ exp 2) m))
+            m))
+          (else
+           (remainder
+            (* base (expmod base (- exp 1) m))
+            m))))
+  (define (fast-prime-smart? times)
+    (define (miller-rabin n)
+      (define (new-square a)
+        (define result (* a a))
+        (cond ((= a 1) 1)
+              ((= a (- n 1)) result)
+              ((= result 1) 0)
+              (else result))
+        )
+      (define (expmodded base exp m)
+        (cond ((= exp 0) 1)
+              ((even? exp)
+               (remainder
+                (new-square (expmodded base (/ exp 2) m))
+                m))
+              (else
+               (remainder
+                (* base (expmodded base (- exp 1) m))
+                m))))
+      (define (try-it a)
+        (not (= (expmod a n n) 0))
+        )
+      (try-it (+ 1 (random (- n 1)))))
+    (cond ((= times 0) true)
+          ((miller-rabin n) (fast-prime-smart? n (- times 1)))
+          (else false)))
+  (fast-prime-smart? 5))
 ;;2.40 define unique-pairs to simplify prime-sum-pairs
 (define (unique-pairs n)
   (flatmap
@@ -44,3 +82,5 @@
      (map (lambda (j) (list i j))
           (enumerate-interval 1 (- i 1)))
      (enumerate-interval 1 n))))
+
+
