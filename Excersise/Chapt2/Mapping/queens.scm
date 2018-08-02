@@ -24,7 +24,7 @@
 (define (queens board-size)
   (define (queen-cols k)
     (if (= k 0)
-        (list empty-board)
+        empty-board
         (filter
          (lambda (positions) (safe? k positions))
          (flatmap
@@ -59,13 +59,20 @@
             (get-row (car positions))
             (get-row-colk (cdr positions)))))
   (define (occupied? new-row positions)
+    ;(let ((current-position-row (get-row (car positions))))
     (if (null? positions)
         #t
-        (if (= new-row (get-row (car positions)))
+        (if (and (or (= new-row (get-row (car positions)))    ;check diagnols
+                     (= (+ new-row 1) (get-row (car positions)))
+                     (= (- new-row 1) (get-row (car positions))))
+                 (not (= k (get-col (car positions)))))
             #f
             (occupied? new-row (cdr positions)))))
   (occupied? (get-row-colk established) established))
 
 (define test-safe (safe? 1 (adjoin-position 1 1 empty-board)))
 (define test2-safe (safe? 2 (adjoin-position 1 2 (adjoin-position 1 1 empty-board))))
-(define sample (adjoin-position 1 1 empty-board))
+(define test3-safe (safe? 2 (adjoin-position 2 2 (adjoin-position 1 1 empty-board)))) ; should fail to diagnol case
+(define test4-safe (safe? 2 (adjoin-position 3 2 (adjoin-position 1 1 empty-board)))) ; should pass
+(define sample (adjoin-position 1 3 empty-board))
+(define adv-sample (adjoin-position 2 2 (adjoin-position 1 1 empty-board)))
