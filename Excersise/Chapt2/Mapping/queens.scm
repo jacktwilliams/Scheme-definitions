@@ -47,9 +47,25 @@
 (define empty-board nil)
 
 (define (adjoin-position row col positions)
-  (append (list positions (make-position row col))))
+  (if (null? positions)
+      (list (make-position row col))
+      (append positions (list (make-position row col)))))
 
 (define (safe? k established)
-  (cond ((null? established) #t)
-        ((not (= ((get-col (car established)) k))) #t)
-        ((
+  (define (get-row-colk positions)
+    (if (null? positions)
+        (error "No queen in column" k)
+        (if (= k (get-col (car positions)))
+            (get-row (car positions))
+            (get-row-colk (cdr positions)))))
+  (define (occupied? new-row positions)
+    (if (null? positions)
+        #t
+        (if (= new-row (get-row (car positions)))
+            #f
+            (occupied? new-row (cdr positions)))))
+  (occupied? (get-row-colk established) established))
+
+(define test-safe (safe? 1 (adjoin-position 1 1 empty-board)))
+(define test2-safe (safe? 2 (adjoin-position 1 2 (adjoin-position 1 1 empty-board))))
+(define sample (adjoin-position 1 1 empty-board))
