@@ -1,3 +1,4 @@
 1.18 Needs to be finished up.
 Fibinacci excersises.
 2.4, 2. 6
+2.42 queens.scm
